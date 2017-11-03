@@ -11,10 +11,10 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
-  ViewPagerAndroid,
   Platform,
   ActivityIndicator
 } from 'react-native'
+import {ViewPagerZoom} from 'react-native-image-zoom'
 
 /**
  * Default styles
@@ -393,6 +393,9 @@ export default class extends Component {
    * @param  {string} dir    'x' || 'y'
    */
   updateIndex = (offset, dir, cb) => {
+	if(!this.internals.offset){
+		return;
+	}
     const state = this.state
     let index = state.index
     const diff = offset[dir] - this.internals.offset[dir]
@@ -637,14 +640,14 @@ export default class extends Component {
        )
     }
     return (
-      <ViewPagerAndroid ref={this.refScrollView}
+      <ViewPagerZoom ref={this.refScrollView}
         {...this.props}
         initialPage={this.props.loop ? this.state.index + 1 : this.state.index}
         onPageSelected={this.onScrollEnd}
         key={pages.length}
         style={[styles.wrapperAndroid, this.props.style]}>
         {pages}
-      </ViewPagerAndroid>
+      </ViewPagerZoom>
     )
   }
 
